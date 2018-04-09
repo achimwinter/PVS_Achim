@@ -2,6 +2,7 @@ package Assignement2;
 
 import Utils.TimeWatch;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
@@ -13,24 +14,24 @@ public class Main {
     }
 
     public static void main(String... args) {
-        int arraylength = 10000000;
+        int arraylength = 10_000_000;
         int[] array = initializeArray(arraylength);
-        List<Long> timeSequential = new ArrayList();
-        List<Long> timeParallel = new ArrayList();
+        List<Long> timeSequential = new LinkedList<>();
+        List<Long> timeParallel = new LinkedList<>();
         TimeWatch watch = TimeWatch.start();
         int[] seqArray = new int[0];
         int[] parArray = new int[0];
 
         int i;
         long passedTimeParallel;
-        for(i = 0; i < 500; ++i) {
+        for(i = 0; i < 200; ++i) {
             watch.reset();
             seqArray = calcArray_seq(array);
             passedTimeParallel = watch.time(TimeUnit.MILLISECONDS);
             timeSequential.add(passedTimeParallel);
         }
 
-        for(i = 0; i < 500; ++i) {
+        for(i = 0; i < 200; ++i) {
             watch.reset();
             parArray = forkJoin_prefix(array);
             passedTimeParallel = watch.time(TimeUnit.MILLISECONDS);
@@ -46,13 +47,13 @@ public class Main {
     }
 
     private static long getAverage(List<Long> timeList) {
-        long result = 0L;
+        long result = 0;
 
         for(int i = 100; i < timeList.size(); ++i) {
             result += timeList.get(i);
         }
 
-        return result / (long)(timeList.size() - 100);
+        return result / (timeList.size() - 100);
     }
 
     private static int[] forkJoin_prefix(int[] oldArray) {
