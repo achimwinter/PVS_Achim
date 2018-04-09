@@ -4,14 +4,14 @@ import java.util.concurrent.RecursiveTask;
 
 class PrefixSumWorker extends RecursiveTask<int[]> {
 
-    private final int BOUND_FOR_SEQUENTIAL_PROCESSING = 4000000;
+    private final int BOUND_FOR_SEQUENTIAL_PROCESSING = 2_600_000;
 
     private final int[] oldArray;
     private int[] newArray;
     private final int startIndex;
     private final int endIndex;
 
-    public PrefixSumWorker(int[] oldArray, int start, int size) {
+    PrefixSumWorker(int[] oldArray, int start, int size) {
         this.oldArray = oldArray;
         this.startIndex = start;
         this.endIndex = this.startIndex + size;
@@ -49,13 +49,13 @@ class PrefixSumWorker extends RecursiveTask<int[]> {
     private int[] concatArrays(int[] array1, int start1, int size1, int[] array2, int start2, int size2) {
         int lastValue = -100000;
 
-        for (int i = start1; i < start1 + size1; ++i) {
+        for (int i = start1; i < start1 + size1; i++) {
             this.newArray[i] = array1[i];
-            if(i == (start1 + size1))
-            lastValue = this.newArray[i];
+            if(i == (start1 + size1 -1))
+                lastValue = this.newArray[i];
         }
 
-        for (int i = start2; i < start2 + size2; ++i) {
+        for (int i = start2; i < start2 + size2; i++) {
             this.newArray[i] = array2[i] + lastValue;
         }
 
