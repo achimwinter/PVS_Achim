@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import static utils.InitializeArray.initializeArray;
 
+
 public class PrefixMain {
     public PrefixMain() {
     }
