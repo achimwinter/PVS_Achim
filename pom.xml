@@ -11,7 +11,7 @@
 
     <packaging>jar</packaging>
     <properties>
-        <class-to-start>assignement3.exercise2.SearchMain</class-to-start>
+        <class-to-start>assignement4.exercise1.ExecutorMain</class-to-start>
     </properties>
 
     <dependencies>
