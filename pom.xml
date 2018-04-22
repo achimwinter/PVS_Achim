@@ -14,6 +14,14 @@
         <class-to-start>assignement3.exercise2.SearchMain</class-to-start>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>3.7</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
