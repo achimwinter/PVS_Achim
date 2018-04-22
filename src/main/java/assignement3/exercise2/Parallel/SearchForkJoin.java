@@ -8,13 +8,13 @@ public class SearchForkJoin extends RecursiveTask<Integer> {
     private final int searchingNumber;
     private final int endIndex;
     private final int startIndex;
-    private static final int THRESHOLD_FOR_SEQUENTIAL_ALGORITHM = 50_000_000;
+    private static final int THRESHOLD_FOR_SEQUENTIAL_ALGORITHM = 5;
 
     public SearchForkJoin(int[] array, int searchingNumber, int startIndex, int endIndex) {
         this.array = array;
         this.searchingNumber = searchingNumber;
-        this.endIndex = endIndex;
         this.startIndex = startIndex;
+        this.endIndex = endIndex;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SearchForkJoin extends RecursiveTask<Integer> {
         int middleIndex = this.startIndex + leftHalfSize;
 
         SearchForkJoin forkLeft = new SearchForkJoin(this.array, this.searchingNumber, this.startIndex, leftHalfSize);
-        SearchForkJoin forkRight = new SearchForkJoin(this.array, this.searchingNumber, middleIndex, rightHalfSize);
+        SearchForkJoin forkRight = new SearchForkJoin(this.array, this.searchingNumber, middleIndex, middleIndex + rightHalfSize);
 
         forkLeft.fork();
         forkRight.fork();
@@ -38,20 +38,15 @@ public class SearchForkJoin extends RecursiveTask<Integer> {
     }
 
     private int computeDirectly() {
-        for (int i = startIndex; i < endIndex; i++) {
+        for (int i = this.startIndex; i < this.endIndex; i++) {
             if (array[i] == searchingNumber)
                 return i;
         }
-        return -1;
+        return -5;
     }
 
     private int mergeResults(int leftForkResult, int rightForkResult) {
-        if (leftForkResult > rightForkResult) {
-            return leftForkResult;
-        } else if (rightForkResult > leftForkResult) {
-            return rightForkResult;
-        }
-        return -1;
+        return (leftForkResult > rightForkResult) ? leftForkResult : rightForkResult;
     }
 
     private int div2Floor(int n) {
@@ -63,6 +58,6 @@ public class SearchForkJoin extends RecursiveTask<Integer> {
     }
 
     private boolean isProblemSmallEnough() {
-        return (this.endIndex - this.startIndex) >= THRESHOLD_FOR_SEQUENTIAL_ALGORITHM;
+        return (this.endIndex - this.startIndex) <= THRESHOLD_FOR_SEQUENTIAL_ALGORITHM;
     }
 }

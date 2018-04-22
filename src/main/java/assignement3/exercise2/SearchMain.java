@@ -12,14 +12,13 @@ import java.util.concurrent.TimeUnit;
 
 public class SearchMain {
 
-    private static int arraySize = 0;
-    private static final int searchingNumber = 1001;
+    private static int arraySize = 20;
+    private static final int searchingNumber = 1111;
     private static TimeWatch watch;
 
     public static void main(final String... args) {
-        arraySize = Integer.parseInt(args[0]);
         int[] array = InitializeArray.initializeArray(arraySize);
-        int positionIndex = ThreadLocalRandom.current().nextInt(0, arraySize);
+        int positionIndex = ThreadLocalRandom.current().nextInt(0, arraySize-1);
         array[positionIndex] = searchingNumber;
         watch = TimeWatch.start();
         long timeParallel = usingParallelSearch(array);
@@ -33,27 +32,29 @@ public class SearchMain {
     }
 
     private static long usingParallelSearch(int[] array) {
+        int position = 0;
         List<Long> timeNeeded = new LinkedList<>();
         SearchForkJoin search = new SearchForkJoin(array, searchingNumber, 0, arraySize);
         for (int i = 0; i <= 100; i++) {
             watch.reset();
-            search.compute();
+            position = search.compute();
             timeNeeded.add(watch.time(TimeUnit.NANOSECONDS));
         }
-
+        System.out.println(position);
         return getAverage(timeNeeded);
 
     }
 
     private static long usingSequentialSearch(int[] array) {
+        int position = 0;
         List<Long> timeNeeded = new LinkedList<>();
         SequentialSearch search = new SequentialSearch(array, searchingNumber);
         for (int i = 0; i <= 200; i++) {
             watch.reset();
-            search.searchForElement();
+            position = search.searchForElement();
             timeNeeded.add(watch.time(TimeUnit.NANOSECONDS));
         }
-
+        System.out.println(position);
         return getAverage(timeNeeded);
     }
 
