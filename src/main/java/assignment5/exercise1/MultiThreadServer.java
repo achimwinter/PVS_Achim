@@ -6,27 +6,27 @@ import java.net.Socket;
 
 public class MultiThreadServer implements Runnable {
 
-    private int          serverPort;
+    private int serverPort;
     private ServerSocket serverSocket = null;
-    private boolean      isStopped    = false;
-    private Thread       runningThread= null;
+    private boolean isStopped = false;
+    private Thread runningThread = null;
 
-    public MultiThreadServer(int port){
+    public MultiThreadServer(int port) {
         this.serverPort = port;
     }
 
-    public void run(){
-        synchronized(this){
+    public void run() {
+        synchronized (this) {
             this.runningThread = Thread.currentThread();
         }
         openServerSocket();
-        while(! isStopped()){
+        while (!isStopped()) {
             Socket clientSocket;
             try {
                 clientSocket = this.serverSocket.accept();
             } catch (IOException e) {
-                if(isStopped()) {
-                    System.out.println("Server Stopped.") ;
+                if (isStopped()) {
+                    System.out.println("Server Stopped.");
                     return;
                 }
                 throw new RuntimeException(
@@ -34,10 +34,10 @@ public class MultiThreadServer implements Runnable {
             }
             new Thread(
                     new WorkerRunnable(
-                            clientSocket, "Multithreaded Server")
+                            clientSocket)
             ).start();
         }
-        System.out.println("Server Stopped.") ;
+        System.out.println("Server Stopped.");
     }
 
 
@@ -45,7 +45,7 @@ public class MultiThreadServer implements Runnable {
         return this.isStopped;
     }
 
-    public synchronized void stop(){
+    public synchronized void stop() {
         this.isStopped = true;
         try {
             this.serverSocket.close();

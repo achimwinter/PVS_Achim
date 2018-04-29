@@ -6,11 +6,9 @@ import java.net.Socket;
 public class WorkerRunnable implements Runnable{
 
     private Socket clientSocket;
-    private String serverText;
 
-    public WorkerRunnable(Socket clientSocket, String serverText) {
+    public WorkerRunnable(Socket clientSocket) {
         this.clientSocket = clientSocket;
-        this.serverText   = serverText;
     }
 
     public void run() {
