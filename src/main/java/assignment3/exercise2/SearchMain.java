@@ -1,7 +1,7 @@
-package assignement3.exercise2;
+package assignment3.exercise2;
 
-import assignement3.exercise2.Parallel.SearchForkJoin;
-import assignement3.exercise2.Sequential.SequentialSearch;
+import assignment3.exercise2.Parallel.SearchForkJoin;
+import assignment3.exercise2.Sequential.SequentialSearch;
 import utils.InitializeArray;
 import utils.TimeWatch;
 

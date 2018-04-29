@@ -1,4 +1,4 @@
-package assignement4.exercise2;
+package assignment4.exercise2;
 
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;

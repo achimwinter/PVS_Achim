@@ -1,4 +1,4 @@
-package assignement4.exercise1;
+package assignment4.exercise1;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;

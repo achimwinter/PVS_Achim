@@ -1,4 +1,4 @@
-package assignement3.exercise2.Parallel;
+package assignment3.exercise2.Parallel;
 
 import java.util.concurrent.RecursiveTask;
 

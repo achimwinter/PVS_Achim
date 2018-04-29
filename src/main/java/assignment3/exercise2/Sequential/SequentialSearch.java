@@ -1,4 +1,4 @@
-package assignement3.exercise2.Sequential;
+package assignment3.exercise2.Sequential;
 
 public class SequentialSearch {
 
