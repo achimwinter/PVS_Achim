@@ -11,7 +11,7 @@
 
     <packaging>jar</packaging>
     <properties>
-        <class-to-start>assignment4.exercise1.ExecutorMain</class-to-start>
+        <class-to-start>assignment5.exercise1.SocketClient</class-to-start>
     </properties>
 
     <dependencies>
