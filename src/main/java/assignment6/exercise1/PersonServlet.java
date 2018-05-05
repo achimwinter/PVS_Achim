@@ -11,17 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 public class PersonServlet extends HttpServlet {
 
 
-  @Override
-  protected void doPost(final HttpServletRequest request, final HttpServletResponse response) {
-    System.out.println(request.getAttribute("name"));
-  }
+    @Override
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response) {
 
-  @Override
-  protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
-      throws IOException {
-    System.out.println(request.getParameter("name"));
-    response.getWriter().print("Hello World");
-  }
+        System.out.println(request.getAttribute("name"));
+    }
+
+    @Override
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
+            throws IOException {
+        System.out.println(request.getParameter("name"));
+        response.getWriter().print("Hello World");
+    }
 
 
 }
