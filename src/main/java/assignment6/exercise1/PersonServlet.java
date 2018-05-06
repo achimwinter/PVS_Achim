@@ -23,6 +23,13 @@ public class PersonServlet extends HttpServlet {
 
         Person person = new Person(lastName, firstName, birthday);
         persons.add(person);
+        if (persons.contains(person)) {
+            try {
+                response.getWriter().print("Created successfully");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
