@@ -24,6 +24,19 @@ public class PersonServletTest {
                 .post(formBody)
                 .build();
 
+        runClientCall(request);
+
+
+        formBody = new FormBody.Builder().add("lastName", "Wurst1")
+                .add("firstName", "Hans")
+                .add("birthday", "02.02.2020")
+                .build();
+
+        request = new Request.Builder()
+                .url("http://localhost:8080/demo/test")
+                .post(formBody)
+                .build();
+
         boolean result = false;
 
         String responseBody = runClientCall(request);
@@ -41,21 +54,25 @@ public class PersonServletTest {
                 .build();
 
         String response = runClientCall(request);
-        //TODO: How to get List of PersonServlet?
-        System.out.println(response);
+        boolean result = false;
+        if (response.equals("Lastname: Wurst, First Name: Hans, Birthday: 02.02.2020\nLastname: Wurst1, First Name: Hans, Birthday: 02.02.2020\n"))
+            result = true;
+        Assert.assertTrue("wrong/no Person returned", result);
     }
 
     @Test
-    public void getSpecificPersons(){
+    public void getSpecificPersons() {
         Request request = new Request.Builder()
                 .url("http://localhost:8080/demo/test?name=Wurst")
                 .get()
                 .build();
 
         String response = runClientCall(request);
-        System.out.println(response);
+        boolean result = false;
+        if (response.equals("Lastname: Wurst, First Name: Hans, Birthday: 02.02.2020\n"))
+            result = true;
+        Assert.assertTrue("wrong/no Person returned", result);
     }
-
 
 
     private String runClientCall(Request request) {
