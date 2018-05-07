@@ -60,6 +60,7 @@ public class PersonServlet extends HttpServlet {
     private void iterateNameParameter(Map.Entry<String, String[]> parameter, final HttpServletResponse response) throws IOException{
         for (int i = 0; i < parameter.getValue().length; i++) {
             for (Person person : persons){
+                if (person.getLastName().equals(parameter.getValue()[i]))
                 printResponse(person.toString(), response);
             }
         }
