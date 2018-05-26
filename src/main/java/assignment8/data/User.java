@@ -7,12 +7,12 @@ import java.util.UUID;
 public class User {
 
 
-    private final UUID id;
+    private final Integer id;
     private final List<Comment> comments = new LinkedList<>();
     private final List<Message> messages = new LinkedList<>();
 
 
-    public User(UUID id) {
+    public User(Integer id) {
         this.id = id;
     }
 }
