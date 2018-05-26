@@ -2,6 +2,7 @@ package assignment8.main;
 
 import assignment8.data.Message;
 import assignment8.data.User;
+import assignment8.dataServices.MessageService;
 import assignment8.dataServices.UserService;
 import com.owlike.genson.GensonBuilder;
 import com.owlike.genson.ext.jaxrs.GensonJaxRSFeature;
@@ -35,6 +36,7 @@ public class Application extends ResourceConfig {
         final Set<Class<?>> returnValue = new HashSet<>();
 
         returnValue.add(UserService.class);
+        returnValue.add(MessageService.class);
         returnValue.add(StartService.class);
 
         return returnValue;

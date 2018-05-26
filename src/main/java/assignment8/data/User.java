@@ -2,7 +2,6 @@ package assignment8.data;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 public class User {
 
@@ -15,4 +14,13 @@ public class User {
     public User(Integer id) {
         this.id = id;
     }
+
+    public void addMessage(Message message){
+        messages.add(message);
+    }
+
+    public void deleteMessage(Message message){
+        messages.remove(message);
+    }
+
 }

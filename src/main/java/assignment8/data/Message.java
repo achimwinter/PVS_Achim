@@ -25,4 +25,8 @@ public class Message {
         this.votes--;
     }
 
+    public void modifyMessage(String text){
+        this.text = text;
+    }
+
 }
