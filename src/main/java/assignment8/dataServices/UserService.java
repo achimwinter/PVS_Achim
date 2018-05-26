@@ -32,7 +32,8 @@ public class UserService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(){
-        return Response.ok("test").build();
+        userManager.createUser();
+        return Response.ok(userManager.getUser(0)).build();
     }
 
     @GET
