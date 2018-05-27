@@ -1,7 +1,5 @@
 package assignment8.main;
 
-import assignment8.data.Message;
-import assignment8.data.User;
 import assignment8.dataServices.MessageService;
 import assignment8.dataServices.UserService;
 import com.owlike.genson.GensonBuilder;

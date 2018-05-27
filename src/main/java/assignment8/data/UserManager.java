@@ -28,9 +28,10 @@ public class UserManager {
         return result;
     }
 
-    public void createUser(){
+    public int createUser(){
         users.add(new User(id));
         ++id;
+        return id-1;
     }
 
     public User getUser(Integer id){

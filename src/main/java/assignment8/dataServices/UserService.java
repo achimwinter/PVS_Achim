@@ -47,8 +47,8 @@ public class UserService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(){
-        userManager.createUser();
-        final URI locationURI = uriInfo.getAbsolutePathBuilder().path("test").build(new Object[0]);
+        Integer id = userManager.createUser();
+        final URI locationURI = uriInfo.getAbsolutePathBuilder().path(id.toString()).build(new Object[0]);
 
         return Response.created(locationURI).build();
     }

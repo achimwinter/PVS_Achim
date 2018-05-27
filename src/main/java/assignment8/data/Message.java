@@ -7,14 +7,18 @@ public class Message {
 
     private final List<Comment> comments =  new LinkedList<>();
     private String text;
-    private  int votes;
+    private int votes;
 
     public Message(String text) {
         this.text = text;
     }
 
     public int getVotes(){
-        return votes;
+        return this.votes;
+    }
+
+    public String getText(){
+        return this.text;
     }
 
     public void incrementVotes(){

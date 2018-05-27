@@ -16,4 +16,5 @@ public class MessageService {
         return Response.ok(new Message("hallo")).build();
     }
 
+
 }
