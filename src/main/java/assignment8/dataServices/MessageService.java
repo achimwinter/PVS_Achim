@@ -12,7 +12,7 @@ import java.net.URI;
 public class MessageService {
 
     @GET
-    public Response getAllMessages(){
+    public Response getAllMessages() {
         return Response.ok(new Message("hallo")).build();
     }
 

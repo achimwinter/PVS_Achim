@@ -9,15 +9,15 @@ public class Comment {
         this.text = text;
     }
 
-    public int getVotes(){
+    public int getVotes() {
         return votes;
     }
 
-    public void incrementVotes(){
+    public void incrementVotes() {
         this.votes++;
     }
 
-    public void decrementVotes(){
+    public void decrementVotes() {
         this.votes--;
     }
 

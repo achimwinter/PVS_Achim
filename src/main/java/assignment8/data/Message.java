@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Message {
 
-    private final List<Comment> comments =  new LinkedList<>();
+    private final List<Comment> comments = new LinkedList<>();
     private String text;
     private int votes;
 
@@ -13,23 +13,23 @@ public class Message {
         this.text = text;
     }
 
-    public int getVotes(){
+    public int getVotes() {
         return this.votes;
     }
 
-    public String getText(){
+    public String getText() {
         return this.text;
     }
 
-    public void incrementVotes(){
+    public void incrementVotes() {
         this.votes++;
     }
 
-    public void decrementVotes(){
+    public void decrementVotes() {
         this.votes--;
     }
 
-    public void modifyMessage(String text){
+    public void modifyMessage(String text) {
         this.text = text;
     }
 

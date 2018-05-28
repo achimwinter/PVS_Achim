@@ -28,25 +28,23 @@ public class UserService {
     protected HttpServletRequest httpServletRequest;
 
 
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(){
+    public Response getAllUsers() {
         userManager.createUser();
         return Response.ok(userManager.getUser(0)).build();
     }
 
     @GET
     @Path("{id}")
-    public Response getUserByID(@PathParam("id") final int id){
+    public Response getUserByID(@PathParam("id") final int id) {
         return Response.ok(userManager.getUser(id)).build();
     }
 
-    
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(){
+    public Response createUser() {
         Integer id = userManager.createUser();
         final URI locationURI = uriInfo.getAbsolutePathBuilder().path(id.toString()).build(new Object[0]);
 
@@ -55,7 +53,7 @@ public class UserService {
 
     @DELETE
     @Path("{id}")
-    public Response deleteUser(@PathParam("id") final int id){
+    public Response deleteUser(@PathParam("id") final int id) {
         userManager.deleteUser(id);
 
         return Response.noContent().build();

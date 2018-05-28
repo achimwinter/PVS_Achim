@@ -15,11 +15,11 @@ public class User {
         this.id = id;
     }
 
-    public void addMessage(Message message){
+    public void addMessage(Message message) {
         messages.add(message);
     }
 
-    public void deleteMessage(Message message){
+    public void deleteMessage(Message message) {
         messages.remove(message);
     }
 

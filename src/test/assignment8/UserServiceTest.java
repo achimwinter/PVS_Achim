@@ -30,7 +30,7 @@ public class UserServiceTest {
     private List<String> createdLocations;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         userManager = UserManager.getInstance();
 
         client = new OkHttpClient();
@@ -49,19 +49,19 @@ public class UserServiceTest {
     }
 
     @After
-    public void tearDown(){
-        for (final String createdLocation : createdLocations){
+    public void tearDown() {
+        for (final String createdLocation : createdLocations) {
             final Request request = new Request.Builder()
                     .url(createdLocation)
                     .delete()
                     .build();
 
-            final Response response = executeRequest(request);
+            executeRequest(request);
         }
     }
 
     @Test
-    public void testCreateUser(){
+    public void testCreateUser() {
         userManager.createUser();
 
         final RequestBody body = RequestBody.create(JSON, genson.serialize(userManager.getUser(0)));
@@ -77,7 +77,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testDeleteUser(){
+    public void testDeleteUser() {
         Request request = new Request.Builder()
                 .url(createdLocations.get(0))
                 .delete()
@@ -94,15 +94,15 @@ public class UserServiceTest {
 
         response = executeRequest(request);
 
-        Assert.assertTrue("User was not deleted", response.code() == 404);
+        Assert.assertEquals("User was not deleted", 404, response.code());
 
-        if(response.code() == 404){
+        if (response.code() == 404) {
             createdLocations.remove(0);
         }
     }
 
-    public void postUser(final User user){
-        final RequestBody body= RequestBody.create(JSON, genson.serialize(user));
+    private void postUser(final User user) {
+        final RequestBody body = RequestBody.create(JSON, genson.serialize(user));
 
         final Request request = new Request.Builder()
                 .url(BASE_URL)
@@ -111,33 +111,33 @@ public class UserServiceTest {
 
         final Response response = executeRequest(request);
 
-        if(response.code() == 201){
+        if (response.code() == 201) {
             createdLocations.add(response.header("Location"));
             createdUsers.add(user);
         }
     }
 
-    private Response executeRequest(final Request request){
+    private Response executeRequest(final Request request) {
         Response response;
         try {
             response = client.newCall(request).execute();
-        }catch (final IOException e){
+        } catch (final IOException e) {
             response = null;
         }
         return response;
     }
-    
-    private String getUserBaseURL(){
+
+    private String getUserBaseURL() {
         final Request request = new Request.Builder()
                 .url(BASE_URL)
                 .get()
                 .build();
-        
+
         final Response response = executeRequest(request);
 
         Headers headers = response.headers();
 
-        for (int i = 0; i < headers.size(); i++){
+        for (int i = 0; i < headers.size(); i++) {
             final String headerValue = headers.value(i);
             if (headerValue.contains("users")) {
                 final int startIndex = headerValue.indexOf("<");

@@ -1,9 +1,7 @@
 package assignment8.data;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class UserManager {
 
@@ -28,17 +26,17 @@ public class UserManager {
         return result;
     }
 
-    public int createUser(){
+    public int createUser() {
         users.add(new User(id));
         ++id;
-        return id-1;
+        return id - 1;
     }
 
-    public User getUser(Integer id){
+    public User getUser(Integer id) {
         return users.get(id.intValue());
     }
 
-    public void deleteUser(Integer id){
+    public void deleteUser(Integer id) {
         users.remove(id);
     }
 

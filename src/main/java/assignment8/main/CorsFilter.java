@@ -24,18 +24,17 @@ import java.io.IOException;
 /**
  * Created by braunpet on 17.04.16.
  */
-public class CorsFilter implements ContainerResponseFilter
-{
-    @Override public void filter( final ContainerRequestContext containerRequestContext,
-                                  final ContainerResponseContext containerResponseContext ) throws IOException
-    {
-        containerResponseContext.getHeaders( ).add( "Access-Control-Allow-Origin", "*" );
-        containerResponseContext.getHeaders( ).add( "Access-Control-Allow-Headers",
-                "origin, content-type, accept, authorization, link, location" );
-        containerResponseContext.getHeaders( ).add( "Access-Control-Allow-Credentials", "true" );
-        containerResponseContext.getHeaders( ).add( "Access-Control-Allow-Methods",
-                "GET, POST, PUT, DELETE, OPTIONS, HEAD" );
-        containerResponseContext.getHeaders( ).add( "Access-Control-Expose-Headers", "Link,Location" );
+public class CorsFilter implements ContainerResponseFilter {
+    @Override
+    public void filter(final ContainerRequestContext containerRequestContext,
+                       final ContainerResponseContext containerResponseContext) {
+        containerResponseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+        containerResponseContext.getHeaders().add("Access-Control-Allow-Headers",
+                "origin, content-type, accept, authorization, link, location");
+        containerResponseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
+        containerResponseContext.getHeaders().add("Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+        containerResponseContext.getHeaders().add("Access-Control-Expose-Headers", "Link,Location");
     }
 
 }
