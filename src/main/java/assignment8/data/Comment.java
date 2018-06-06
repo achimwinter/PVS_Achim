@@ -1,9 +1,14 @@
 package assignment8.data;
 
+import java.time.LocalDateTime;
+
 public class Comment {
 
-    private final String text;
-    private int votes = 0;
+    private String text;
+    private User author;
+    private int votes;
+    private LocalDateTime createdAt;
+
 
     public Comment(String text) {
         this.text = text;

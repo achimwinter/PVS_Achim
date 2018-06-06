@@ -1,13 +1,15 @@
 package assignment8.data;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Message {
 
-    private final List<Comment> comments = new LinkedList<>();
     private String text;
     private int votes;
+    private User author;
+    private LocalDateTime createdAt;
 
     public Message(String text) {
         this.text = text;
