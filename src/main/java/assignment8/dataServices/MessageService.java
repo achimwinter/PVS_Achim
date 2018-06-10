@@ -1,10 +1,7 @@
 package assignment8.dataServices;
 
-import assignment8.data.Message;
-import assignment8.data.MessageManager;
-import assignment8.data.Vote;
+import assignment8.data.*;
 import assignment8.linkutils.Hyperlinks;
-import com.owlike.genson.Genson;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -74,19 +71,24 @@ public class MessageService {
         return Response.ok().build();
     }
 
+
     @POST
-    @Path("{id: \\d+}/votes/")
+    @Path("{id: \\d+}/votings/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vote(@PathParam("id") final int id, final Vote vote){
+        final Response.ResponseBuilder builder = Response.ok();
+
+
         System.out.println("reached");
-        Genson genson = new Genson();
-        System.out.println(genson.serialize(vote));
+
         Message message = manager.getMessage(id);
 
         if (vote.getVoteType().isVotePositive())
-            message.setVotes(message.getVotes() + 1);
+            message.incrementVotes();
         else
-            message.setVotes(message.getVotes() - 1);
+            message.decrementVotes();
+
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + id, "GET/getMessage", MediaType.APPLICATION_JSON);
 
         return Response.ok().build();
     }
@@ -101,4 +103,29 @@ public class MessageService {
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/", "GET/getMessages", MediaType.APPLICATION_JSON);
         return Response.ok().build();
     }
+
+    @GET
+    @Path("{id : \\d+}/comments")
+    public Response getComments(@PathParam("id") final int id){
+        final Response.ResponseBuilder builder = Response.ok(CommentManager.getInstance().getAllComments(id));
+
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + id + "/comments", "POST/postComment", MediaType.APPLICATION_JSON);
+
+        return builder.build();
+    }
+
+    @POST
+    @Path("{id : \\d+}/comments")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createComment(final Comment comment){
+        System.out.println("reached");
+        final Response.ResponseBuilder builder = Response.ok();
+
+        final int i = CommentManager.getInstance().addComment(comment);
+
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + i + "/comments/", "POST/createComment", MediaType.APPLICATION_JSON);
+
+        return builder.build();
+    }
+
 }
