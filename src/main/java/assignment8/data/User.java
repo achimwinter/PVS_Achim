@@ -1,10 +1,16 @@
 package assignment8.data;
 
-import java.util.LinkedList;
-import java.util.List;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "USERS")
 public class User {
-
 
     private final Integer id;
 
@@ -13,6 +19,9 @@ public class User {
         this.id = id;
     }
 
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name="increment", strategy = "increment")
     public int getID(){
         return this.id;
     }

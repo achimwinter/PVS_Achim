@@ -1,5 +1,10 @@
 package assignment8.data;
 
+import assignment8.linkutils.ServerLinkConverter;
+import com.owlike.genson.annotation.JsonConverter;
+import org.glassfish.jersey.linking.InjectLink;
+
+import javax.ws.rs.core.Link;
 import java.time.LocalDateTime;
 
 public class Message {
@@ -9,6 +14,14 @@ public class Message {
     private int votes;
     private User author;
     private LocalDateTime createdAt;
+
+    @InjectLink( style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.id", rel = "self", type = "application/json")
+    private Link self;
+
+    @JsonConverter(ServerLinkConverter.class)
+    public Link getSelf(){
+        return self;
+    }
 
     public int getId() {
         return id;

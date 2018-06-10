@@ -32,8 +32,6 @@ public class UserService {
     @GET
     @Path("{id}")
     public Response getUserByID(@PathParam("id") final int id) {
-        User user = UserManager.getInstance().getUser(id);
-        System.out.println(user.getID());
         return Response.ok(UserManager.getInstance().getUser(id)).build();
     }
 
@@ -46,7 +44,7 @@ public class UserService {
         final int id = UserManager.getInstance().createUser();
 
         Hyperlinks.addLink(this.uriInfo, builder, uriInfo.getAbsolutePath().toString() + "/" + id, "GET/getUser", MediaType.APPLICATION_JSON);
-        System.out.println(uriInfo.getAbsolutePath());
+
         return builder.build();
     }
 

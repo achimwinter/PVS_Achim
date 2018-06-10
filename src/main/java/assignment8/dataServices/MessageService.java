@@ -32,15 +32,15 @@ public class MessageService {
 
     @GET
     public Response getAllMessages() {
+        System.out.println("Returning all Messages");
+
         final List<Message> messagesList = MessageManager.getInstance().getAllMessages();
 
-        final Response.ResponseBuilder builder = Response.ok();
+        for (Message message: messagesList) {
 
-        for (Message message : messagesList){
-            Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + message.getId(), "GET/getMessage", MediaType.APPLICATION_JSON);
         }
 
-
+        final Response.ResponseBuilder builder = Response.ok(messagesList);
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/", "GET/getMessage", MediaType.APPLICATION_JSON);
 
@@ -51,6 +51,7 @@ public class MessageService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createMessage(final Message message){
+        System.out.println("creating Message: " + message.getText());
         final Response.ResponseBuilder builder = Response.ok();
 
         final int i = MessageManager.getInstance().addMessage(message);

@@ -28,7 +28,7 @@ public class UserManager {
 
     public int createUser() {
         users.add(new User(this.id));
-        ++this.id;
+        this.id += 2;
         return this.id - 1;
     }
 
