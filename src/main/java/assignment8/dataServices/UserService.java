@@ -1,7 +1,10 @@
 package assignment8.dataServices;
 
 
+import assignment8.data.User;
 import assignment8.data.UserManager;
+import assignment8.linkutils.Hyperlinks;
+import com.owlike.genson.Genson;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +15,6 @@ import java.net.URI;
 
 @Path("users")
 public class UserService {
-
-    private final UserManager userManager = UserManager.getInstance();
 
     @Context
     protected UriInfo uriInfo;
@@ -29,34 +30,24 @@ public class UserService {
 
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers() {
-        userManager.createUser();
-        return Response.ok(userManager.getUser(0)).build();
-    }
-
-    @GET
     @Path("{id}")
     public Response getUserByID(@PathParam("id") final int id) {
-        return Response.ok(userManager.getUser(id)).build();
+        User user = UserManager.getInstance().getUser(id);
+        System.out.println(user.getID());
+        return Response.ok(UserManager.getInstance().getUser(id)).build();
     }
 
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser() {
-        Integer id = userManager.createUser();
-        final URI locationURI = uriInfo.getAbsolutePathBuilder().path(id.toString()).build(new Object[0]);
+        final Response.ResponseBuilder builder = Response.ok();
 
-        return Response.created(locationURI).build();
-    }
+        final int id = UserManager.getInstance().createUser();
 
-    @DELETE
-    @Path("{id}")
-    public Response deleteUser(@PathParam("id") final int id) {
-        userManager.deleteUser(id);
-
-        return Response.noContent().build();
+        Hyperlinks.addLink(this.uriInfo, builder, uriInfo.getAbsolutePath().toString() + "/" + id, "GET/getUser", MediaType.APPLICATION_JSON);
+        System.out.println(uriInfo.getAbsolutePath());
+        return builder.build();
     }
 
 }
