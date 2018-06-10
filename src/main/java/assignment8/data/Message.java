@@ -15,7 +15,7 @@ public class Message {
     private User author;
     private LocalDateTime createdAt;
 
-    @InjectLink( style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.id", rel = "self", type = "application/json")
+    @InjectLink( style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.id}", rel = "self", type = "application/json")
     private Link self;
 
     @JsonConverter(ServerLinkConverter.class)

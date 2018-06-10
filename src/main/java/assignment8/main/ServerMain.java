@@ -1,6 +1,9 @@
 package assignment8.main;
 
 import assignment8.data.Message;
+import assignment8.data.User;
+import assignment8.data.Vote;
+import assignment8.data.VoteType;
 import com.owlike.genson.Genson;
 import org.apache.catalina.Context;
 import org.apache.catalina.WebResourceRoot;
@@ -9,6 +12,7 @@ import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 public class ServerMain {
 
@@ -25,12 +29,15 @@ public class ServerMain {
         String pathToClasses = new File(WEB_APP_CLASSES).getAbsolutePath();
         WebResourceRoot resources = new StandardRoot(context);
         DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
-//
-//        Genson genson = new Genson();
-//        Message ms = new Message();
-//        ms.setText("test");
-//        ms.setVotes(2);
-//        System.out.println(genson.serialize(ms));
+
+        Genson genson = new Genson();
+        Vote vote = new Vote();
+        vote.setAuthor(null);
+        vote.setCreatedAt(LocalDateTime.of(2018,6,10,17,0));
+        vote.setVoteType(new VoteType(true));
+
+
+        System.out.println(genson.serialize(vote));
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);

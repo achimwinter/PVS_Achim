@@ -14,7 +14,6 @@ public class ServerLinkConverter implements Converter<Link>
     @Override
     public void serialize(final Link link, final ObjectWriter
             objectWriter, final Context context)
-            throws Exception
     {
         objectWriter.beginObject();
         objectWriter.writeString("href", replaceCharacters(link.getUri(
@@ -31,7 +30,7 @@ public class ServerLinkConverter implements Converter<Link>
 
     @Override
     public Link deserialize(final ObjectReader objectReader,
-                            final Context context) throws Exception
+                            final Context context)
     {
         Link returnValue = null;
 
