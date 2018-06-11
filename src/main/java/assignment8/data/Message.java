@@ -4,22 +4,24 @@ import assignment8.linkutils.ServerLinkConverter;
 import com.owlike.genson.annotation.JsonConverter;
 import org.glassfish.jersey.linking.InjectLink;
 
+import javax.persistence.Entity;
 import javax.ws.rs.core.Link;
 import java.time.LocalDateTime;
 
+@Entity
 public class Message {
 
     private int id;
     private String text;
     private int votes;
-    private User author;
+    private int authorID;
     private LocalDateTime createdAt;
 
-    @InjectLink( style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.id}", rel = "self", type = "application/json")
+    @InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.id}", rel = "self", type = "application/json")
     private Link self;
 
     @JsonConverter(ServerLinkConverter.class)
-    public Link getSelf(){
+    public Link getSelf() {
         return self;
     }
 
@@ -33,15 +35,14 @@ public class Message {
 
     public void setVotes(final int votes) {
         this.votes = votes;
-
     }
 
-    public User getAuthor() {
-        return author;
+    public int getAuthorID() {
+        return authorID;
     }
 
-    public void setAuthor(final User author) {
-        this.author = author;
+    public void setAuthorID(final int authorID) {
+        this.authorID = authorID;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -52,7 +53,7 @@ public class Message {
         this.createdAt = createdAt;
     }
 
-    public void setText(String text){
+    public void setText(final String text) {
         this.text = text;
 
     }
@@ -73,7 +74,7 @@ public class Message {
         this.votes--;
     }
 
-    public void modifyMessage(String text) {
+    public void modifyMessage(final String text) {
         this.text = text;
     }
 

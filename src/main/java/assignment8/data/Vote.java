@@ -1,19 +1,23 @@
 package assignment8.data;
 
-import java.time.LocalDateTime;
+import com.owlike.genson.annotation.JsonDateFormat;
+
+import java.util.Date;
 
 public class Vote {
 
-    private User author;
+    private int authorId;
     private VoteType voteType;
-    private LocalDateTime createdAt;
 
-    public User getAuthor() {
-        return author;
+    @JsonDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    private Date createdAt;
+
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(final User author) {
-        this.author = author;
+    public void setAuthorId(final int authorId) {
+        this.authorId = authorId;
     }
 
     public VoteType getVoteType() {
@@ -24,11 +28,11 @@ public class Vote {
         this.voteType = voteType;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(final LocalDateTime createdAt) {
+    public void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Path("messages")
 public class MessageService {
 
-    MessageManager manager = MessageManager.getInstance();
+    private MessageManager manager = MessageManager.getInstance();
 
     @Context
     protected UriInfo uriInfo;
@@ -73,7 +73,7 @@ public class MessageService {
 
 
     @POST
-    @Path("{id: \\d+}/votings/")
+    @Path("{id: \\d+}/votes/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vote(@PathParam("id") final int id, final Vote vote){
         final Response.ResponseBuilder builder = Response.ok();
