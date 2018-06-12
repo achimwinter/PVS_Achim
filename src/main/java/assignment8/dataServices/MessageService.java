@@ -17,14 +17,6 @@ public class MessageService {
     @Context
     protected UriInfo uriInfo;
 
-    @Context
-    protected ContainerRequestContext requestContext;
-
-    @Context
-    protected Request request;
-
-    @Context
-    protected HttpServletRequest httpServletRequest;
 
     @GET
     @Path("{id : \\d+}")
