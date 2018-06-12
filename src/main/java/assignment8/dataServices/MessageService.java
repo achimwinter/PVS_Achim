@@ -3,9 +3,7 @@ package assignment8.dataServices;
 import assignment8.data.*;
 import assignment8.linkutils.Hyperlinks;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.*;
 import java.util.List;
 
@@ -16,15 +14,6 @@ public class MessageService {
 
     @Context
     protected UriInfo uriInfo;
-
-    @Context
-    protected ContainerRequestContext requestContext;
-
-    @Context
-    protected Request request;
-
-    @Context
-    protected HttpServletRequest httpServletRequest;
 
     @GET
     @Path("{id : \\d+}")
@@ -46,7 +35,6 @@ public class MessageService {
         final Response.ResponseBuilder builder = Response.ok(messagesList);
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/", "GET/getMessage", MediaType.APPLICATION_JSON);
-
 
         return builder.build();
     }
@@ -77,9 +65,6 @@ public class MessageService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vote(@PathParam("id") final int id, final Vote vote){
         final Response.ResponseBuilder builder = Response.ok();
-
-
-        System.out.println("reached");
 
         Message message = manager.getMessage(id);
 
@@ -118,7 +103,6 @@ public class MessageService {
     @Path("{id : \\d+}/comments")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createComment(final Comment comment){
-        System.out.println("reached");
         final Response.ResponseBuilder builder = Response.ok();
 
         final int i = CommentManager.getInstance().addComment(comment);
