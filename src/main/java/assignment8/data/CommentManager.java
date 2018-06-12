@@ -7,11 +7,10 @@ import java.util.List;
 public class CommentManager {
 
 
-    private List<Comment> comments = new LinkedList<>();
-    private Integer id = 0;
-
+    private static final Object mutex = new Object();
     private static volatile assignment8.data.CommentManager instance;
-    private static Object mutex = new Object();
+    private final List<Comment> comments = new LinkedList<>();
+    private Integer id = 0;
 
     private CommentManager() {
     }
@@ -29,13 +28,17 @@ public class CommentManager {
     }
 
 
-    public int addComment(Comment comment) {
-        if (comment.getMessage() == null)
-            throw new RuntimeException("posted Comment without Message");
+    public int addComment(final Comment comment) {
         comment.setId(this.id);
         comments.add(comment);
-        this.id += 2;
-        return this.id--;
+        this.id++;
+        return this.id;
+    }
+
+    public void modifyComment(final int oldCommentId, final Comment newComment) {
+        newComment.setId(oldCommentId);
+        comments.remove(oldCommentId);
+        comments.add(newComment);
     }
 
     public Comment getComment(final int id) {
@@ -43,10 +46,10 @@ public class CommentManager {
     }
 
     public List<Comment> getAllComments(final int id) {
-        List<Comment> messageComments = new LinkedList<>();
+        final List<Comment> messageComments = new LinkedList<>();
 
         for (final Comment comment : messageComments){
-            if (comment.getMessage().getId() == id)
+            if (comment.getMessageId() == id)
                 messageComments.add(comment);
         }
 
