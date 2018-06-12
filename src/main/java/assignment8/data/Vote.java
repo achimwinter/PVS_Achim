@@ -7,7 +7,7 @@ import java.util.Date;
 public class Vote {
 
     private int authorId;
-    private VoteType voteType;
+    private boolean isPositive;
 
     @JsonDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     private Date createdAt;
@@ -20,12 +20,12 @@ public class Vote {
         this.authorId = authorId;
     }
 
-    public VoteType getVoteType() {
-        return voteType;
+    public boolean isPositive() {
+        return isPositive;
     }
 
-    public void setVoteType(final VoteType voteType) {
-        this.voteType = voteType;
+    public void setPositive(boolean positive) {
+        isPositive = positive;
     }
 
     public Date getCreatedAt() {

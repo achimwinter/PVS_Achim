@@ -14,32 +14,38 @@ public class Comment {
     private User author;
     private int votes;
     private LocalDateTime createdAt;
-    private Message message;
+    private int messageId;
 
-    @InjectLink( style = InjectLink.Style.ABSOLUTE, value = "/comments/{instance.id}", rel = "self", type = "application/json")
+    @InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.messageId}/comments/${instance.id}", rel = "self", type = "application/json")
     private Link self;
 
-    @JsonConverter(ServerLinkConverter.class)
-    public Link getSelf(){
-        return self;
-    }
-
-
-    public Comment(final String text, final Message message) {
-        this.message = message;
+    public Comment(final String text, final int messageId) {
+        this.messageId = messageId;
         this.text = text;
     }
 
-    public Message getMessage() {
-        return message;
+    public Comment() {
     }
 
-    public void setMessage(final Message message) {
-        this.message = message;
+    @JsonConverter(ServerLinkConverter.class)
+    public Link getSelf() {
+        return self;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(final int messageId) {
+        this.messageId = messageId;
     }
 
     public int getVotes() {
         return votes;
+    }
+
+    public void setVotes(final int votes) {
+        this.votes = votes;
     }
 
     public void incrementVotes() {
@@ -72,10 +78,6 @@ public class Comment {
 
     public void setAuthor(final User author) {
         this.author = author;
-    }
-
-    public void setVotes(final int votes) {
-        this.votes = votes;
     }
 
     public LocalDateTime getCreatedAt() {

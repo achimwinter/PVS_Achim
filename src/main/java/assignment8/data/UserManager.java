@@ -5,11 +5,10 @@ import java.util.List;
 
 public class UserManager {
 
-    private List<User> users = new LinkedList<>();
-    private Integer id = 0;
-
     private static volatile UserManager instance;
     private static Object mutex = new Object();
+    private List<User> users = new LinkedList<>();
+    private Integer id = 0;
 
     private UserManager() {
     }
@@ -28,8 +27,8 @@ public class UserManager {
 
     public int createUser() {
         users.add(new User(this.id));
-        this.id += 2;
-        return this.id - 1;
+        this.id++;
+        return this.id;
     }
 
     public User getUser(Integer id) {

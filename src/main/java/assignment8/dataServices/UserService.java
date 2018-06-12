@@ -1,16 +1,18 @@
 package assignment8.dataServices;
 
 
-import assignment8.data.User;
 import assignment8.data.UserManager;
-import assignment8.linkutils.Hyperlinks;
-import com.owlike.genson.Genson;
-
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 
 @Path("users")
@@ -37,13 +39,12 @@ public class UserService {
 
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser() {
-        final Response.ResponseBuilder builder = Response.ok();
-
         final int id = UserManager.getInstance().createUser();
 
-        Hyperlinks.addLink(this.uriInfo, builder, uriInfo.getAbsolutePath().toString() + "/" + id, "GET/getUser", MediaType.APPLICATION_JSON);
+        final URI locationURI = uriInfo.getAbsolutePathBuilder().path(Integer.toString(id)).build(new Object[0]);
+
+        final Response.ResponseBuilder builder = Response.created(locationURI);
 
         return builder.build();
     }
