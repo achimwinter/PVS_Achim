@@ -4,15 +4,14 @@ import assignment8.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageManager {
 
     private static final Object mutex = new Object();
     private static volatile MessageManager instance;
-    final Session session = HibernateUtil.getSession();
-    private final List<Message> messages = new LinkedList<>();
+    private final Session session = HibernateUtil.getSession();
 
     private MessageManager() {
     }
@@ -31,9 +30,10 @@ public class MessageManager {
     }
 
     public void modifyComment(final int oldMessageId, final Message newMessage) {
-        messages.remove(oldMessageId);
+        Message oldMessage = (Message) session.get(Message.class, oldMessageId);
+        session.delete(oldMessage);
         newMessage.setId(oldMessageId);
-        messages.add(newMessage);
+        session.persist(newMessage);
     }
 
 
@@ -44,16 +44,21 @@ public class MessageManager {
         return message.getId();
     }
 
-    public Message getMessage(final int id){
-        return messages.get(id);
+    public Message getMessage(final int id) {
+        return (Message) session.get(Message.class, id);
     }
 
-    public List<Message> getAllMessages(){
-        return this.messages;
+    public List getAllMessages() {
+        try {
+            return session
+                    .createCriteria(Message.class).list();
+        } catch (Exception e) {
+            return new ArrayList<Message>();
+        }
     }
 
-    public void deleteMessage(final int id){
-        messages.remove(id);
+    public void deleteMessage(final int id) {
+        session.delete(session.get(Message.class, id));
     }
 
 }

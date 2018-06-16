@@ -72,8 +72,6 @@
             <version>1.8.0-beta2</version>
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
