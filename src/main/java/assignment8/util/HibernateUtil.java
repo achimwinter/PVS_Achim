@@ -22,6 +22,7 @@ public class HibernateUtil {
         }
     }
 
+
     public static void loadSessionFactory() {
 
         Configuration configuration = new Configuration();

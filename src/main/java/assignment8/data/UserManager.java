@@ -1,14 +1,13 @@
 package assignment8.data;
 
-import java.util.LinkedList;
-import java.util.List;
+import assignment8.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class UserManager {
 
     private static volatile UserManager instance;
-    private static Object mutex = new Object();
-    private List<User> users = new LinkedList<>();
-    private Integer id = 0;
+    private static final Object mutex = new Object();
 
     private UserManager() {
     }
@@ -26,17 +25,17 @@ public class UserManager {
     }
 
     public int createUser() {
-        users.add(new User(this.id));
-        this.id++;
-        return this.id;
+        Session session = HibernateUtil.getSession();
+        User user = new User();
+        Transaction tx = session.beginTransaction();
+        session.persist(user);
+        tx.commit();
+        return user.getId();
     }
 
-    public User getUser(Integer id) {
-        return users.get(id.intValue());
-    }
-
-    public void deleteUser(Integer id) {
-        users.remove(id);
+    public User getUser(final Integer id) {
+        Session session = HibernateUtil.getSession();
+        return (User) session.get(User.class, id);
     }
 
 }

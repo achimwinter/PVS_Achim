@@ -43,9 +43,6 @@ public class UserServiceTest {
 
         BASE_URL = getUserBaseURL();
 
-        postUser(new User(10));
-        postUser(new User(11));
-        postUser(new User(12));
     }
 
     @After

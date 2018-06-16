@@ -1,30 +1,22 @@
 package assignment8.data;
 
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table (name = "USERS")
+@Table(name = "users_table")
 public class User {
 
-    private final Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
+    public Integer getId() {
+        return id;
+    }
 
-    public User(Integer id) {
+    public void setId(final int id) {
         this.id = id;
     }
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    public int getID(){
-        return this.id;
-    }
-
-
 }

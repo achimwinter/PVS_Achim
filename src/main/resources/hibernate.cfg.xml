@@ -17,6 +17,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- Mapping with model class containing annotations -->
+        <mapping class="assignment8.data.User"/>
         <mapping class="assignment8.data.Message"/>
     </session-factory>
 </hibernate-configuration>

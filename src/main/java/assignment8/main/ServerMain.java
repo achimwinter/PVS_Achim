@@ -1,5 +1,8 @@
 package assignment8.main;
 
+import assignment8.data.Message;
+import assignment8.data.User;
+import com.owlike.genson.Genson;
 import org.apache.catalina.Context;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.startup.Tomcat;
@@ -23,6 +26,14 @@ public class ServerMain {
         final String pathToClasses = new File(WEB_APP_CLASSES).getAbsolutePath();
         final WebResourceRoot resources = new StandardRoot(context);
         final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
+
+        User us = new User();
+        us.setId(2);
+        Message mess = new Message();
+        mess.setAuthor(us);
+        mess.setText("hallo user 2");
+        Genson g = new Genson();
+        System.out.println(g.serialize(mess));
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);

@@ -23,8 +23,8 @@ public class Message {
     @Column(name = "votes")
     private int votes;
 
-    @Column(name = "authorId")
-    private int authorID;
+    @ManyToOne
+    private User author;
 
     @Column(name = "createdAt")
     private Date createdAt;
@@ -46,12 +46,12 @@ public class Message {
         this.id = id;
     }
 
-    public int getAuthorID() {
-        return authorID;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorID(final int authorID) {
-        this.authorID = authorID;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public Date getCreatedAt() {
