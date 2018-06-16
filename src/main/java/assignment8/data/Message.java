@@ -6,11 +6,12 @@ import org.glassfish.jersey.linking.InjectLink;
 
 import javax.persistence.*;
 import javax.ws.rs.core.Link;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "messages_table")
-public class Message {
+public class Message implements Serializable {
 
     @Id
     @Column(name = "id")

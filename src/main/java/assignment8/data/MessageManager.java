@@ -2,6 +2,7 @@ package assignment8.data;
 
 import assignment8.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,9 +38,9 @@ public class MessageManager {
 
 
     public int addMessage(Message message) {
-        session.beginTransaction();
-        session.save(message);
-        session.getTransaction().commit();
+        Transaction tx = session.beginTransaction();
+        session.persist(message);
+        tx.commit();
         return message.getId();
     }
 
