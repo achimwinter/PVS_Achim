@@ -2,7 +2,6 @@ package assignment8.data;
 
 import assignment8.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,8 +10,7 @@ public class MessageManager {
 
     private static final Object mutex = new Object();
     private static volatile MessageManager instance;
-    final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
-    final Session session = sessionFactory.getCurrentSession();
+    final Session session = HibernateUtil.getSession();
     private final List<Message> messages = new LinkedList<>();
 
     private MessageManager() {

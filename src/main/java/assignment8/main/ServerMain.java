@@ -8,7 +8,6 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.io.File;
 
@@ -28,8 +27,8 @@ public class ServerMain {
         final WebResourceRoot resources = new StandardRoot(context);
         final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
 
-        final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
-        final Session session = sessionFactory.getCurrentSession();
+        HibernateUtil.loadSessionFactory();
+        final Session session = HibernateUtil.getSession();
 
         Message mess = new Message();
         mess.setText("Hallo");
