@@ -1,7 +1,7 @@
 package assignment8.dataServices;
 
 import assignment8.data.*;
-import assignment8.linkutils.Hyperlinks;
+import assignment8.util.Hyperlinks;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -47,13 +47,12 @@ public class MessageService {
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/", "GET/getMessage", MediaType.APPLICATION_JSON);
 
-
         return builder.build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMessage(final Message message) {
+    public Response createMessage(Message message) {
         final Response.ResponseBuilder builder = Response.ok();
 
         final int i = manager.addMessage(message);

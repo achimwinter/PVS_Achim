@@ -1,5 +1,9 @@
 package assignment8.data;
 
+import assignment8.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,8 +11,9 @@ public class MessageManager {
 
     private static final Object mutex = new Object();
     private static volatile MessageManager instance;
+    final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
+    final Session session = sessionFactory.getCurrentSession();
     private final List<Message> messages = new LinkedList<>();
-    private Integer id = 0;
 
     private MessageManager() {
     }
@@ -18,8 +23,9 @@ public class MessageManager {
         if (result == null) {
             synchronized (mutex) {
                 result = instance;
-                if (result == null)
+                if (result == null) {
                     instance = result = new MessageManager();
+                }
             }
         }
         return result;
@@ -32,11 +38,11 @@ public class MessageManager {
     }
 
 
-    public int addMessage(final Message message) {
-        message.setId(this.id);
-        messages.add(message);
-        this.id++;
-        return this.id;
+    public int addMessage(Message message) {
+        session.beginTransaction();
+        session.save(message);
+        session.getTransaction().commit();
+        return message.getId();
     }
 
     public Message getMessage(final int id){
@@ -50,4 +56,5 @@ public class MessageManager {
     public void deleteMessage(final int id){
         messages.remove(id);
     }
+
 }

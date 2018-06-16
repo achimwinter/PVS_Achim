@@ -1,5 +1,5 @@
 
-package assignment8.linkutils;
+package assignment8.util;
 
 
 import com.owlike.genson.Context;
@@ -16,7 +16,7 @@ public class ServerLinkConverter implements Converter<Link>
             objectWriter, final Context context)
     {
         objectWriter.beginObject();
-        objectWriter.writeString("href", replaceCharacters(link.getUri(
+        objectWriter.writeString("href", this.replaceCharacters(link.getUri(
         ).toASCIIString()));
         objectWriter.writeString("rel", link.getRel());
 

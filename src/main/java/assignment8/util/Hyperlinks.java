@@ -1,4 +1,4 @@
-package assignment8.linkutils;
+package assignment8.util;
 /*
  * Copyright (c) peter.braun@fhws.de
  *

@@ -1,6 +1,6 @@
 package assignment8.data;
 
-import assignment8.linkutils.ServerLinkConverter;
+import assignment8.util.ServerLinkConverter;
 import com.owlike.genson.annotation.JsonConverter;
 import org.glassfish.jersey.linking.InjectLink;
 

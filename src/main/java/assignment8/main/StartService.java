@@ -1,8 +1,6 @@
 package assignment8.main;
 
-import assignment8.data.Message;
-import assignment8.linkutils.Hyperlinks;
-import com.owlike.genson.Genson;
+import assignment8.util.Hyperlinks;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

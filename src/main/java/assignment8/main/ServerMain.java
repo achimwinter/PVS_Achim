@@ -1,10 +1,14 @@
 package assignment8.main;
 
+import assignment8.data.Message;
+import assignment8.util.HibernateUtil;
 import org.apache.catalina.Context;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.io.File;
 
@@ -23,6 +27,15 @@ public class ServerMain {
         final String pathToClasses = new File(WEB_APP_CLASSES).getAbsolutePath();
         final WebResourceRoot resources = new StandardRoot(context);
         final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
+
+        final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
+        final Session session = sessionFactory.getCurrentSession();
+
+        Message mess = new Message();
+        mess.setText("Hallo");
+        session.beginTransaction();
+        session.persist(mess);
+        session.getTransaction().commit();
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);
