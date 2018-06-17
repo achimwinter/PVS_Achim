@@ -43,6 +43,7 @@ public class MessageManager {
         Transaction tx = session.beginTransaction();
         session.persist(message);
         tx.commit();
+        session.flush();
         session.close();
         return message.getId();
     }

@@ -3,10 +3,11 @@ package assignment8.dataServices;
 import assignment8.data.*;
 import assignment8.util.Hyperlinks;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @Path("messages")
@@ -112,7 +113,7 @@ public class MessageService {
 
         final int id = CommentManager.getInstance().addComment(comment);
 
-        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessageId() + "/comments/" + id, "GET/getComment", MediaType.APPLICATION_JSON);
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessage() + "/comments/" + id, "GET/getComment", MediaType.APPLICATION_JSON);
 
         return builder.build();
     }
@@ -166,7 +167,7 @@ public class MessageService {
         else
             comment.decrementVotes();
 
-        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessageId() + "/comments/" + commentId, "GET/getComment", MediaType.APPLICATION_JSON);
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessage() + "/comments/" + commentId, "GET/getComment", MediaType.APPLICATION_JSON);
 
         return Response.ok().build();
     }

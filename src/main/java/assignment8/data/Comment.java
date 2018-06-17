@@ -20,8 +20,9 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne
-    private User author;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "comments_author_id")
+    private User comments_author;
 
     @Column(name = "votes")
     private int votes;
@@ -29,8 +30,9 @@ public class Comment {
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    private Message message;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "comment_message_id")
+    private Message comment_message;
 
     @InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.messageId}/comments/${instance.id}", rel = "self", type = "application/json")
     @Transient
@@ -44,12 +46,12 @@ public class Comment {
         return self;
     }
 
-    public Message getMessageId() {
-        return message;
+    public Message getMessage() {
+        return comment_message;
     }
 
-    public void setMessageId(final Message message) {
-        this.message = message;
+    public void setMessage(final Message message) {
+        this.comment_message = message;
     }
 
     public int getVotes() {
@@ -84,12 +86,12 @@ public class Comment {
         this.text = text;
     }
 
-    public User getAuthor() {
-        return author;
+    public User getComments_author() {
+        return comments_author;
     }
 
-    public void setAuthor(final User author) {
-        this.author = author;
+    public void setComments_author(final User author) {
+        this.comments_author = author;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -19,5 +19,6 @@
         <!-- Mapping with model class containing annotations -->
         <mapping class="assignment8.data.User"/>
         <mapping class="assignment8.data.Message"/>
+        <mapping class="assignment8.data.Comment"/>
     </session-factory>
 </hibernate-configuration>

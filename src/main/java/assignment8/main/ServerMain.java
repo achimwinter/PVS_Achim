@@ -1,5 +1,6 @@
 package assignment8.main;
 
+import assignment8.data.Comment;
 import assignment8.data.Message;
 import assignment8.data.User;
 import com.owlike.genson.Genson;
@@ -29,11 +30,19 @@ public class ServerMain {
 
         User us = new User();
         us.setId(2);
+
         Message mess = new Message();
-        mess.setAuthor(us);
+        mess.setMessage_author(us);
         mess.setText("hallo user 2");
+
+        Comment comment = new Comment();
+        comment.setMessage(mess);
+        comment.setComments_author(us);
+        comment.setText("first comment");
+
+
         Genson g = new Genson();
-        System.out.println(g.serialize(mess));
+        System.out.println(g.serialize(comment));
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);

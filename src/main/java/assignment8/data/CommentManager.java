@@ -1,6 +1,11 @@
 package assignment8.data;
 
-import java.util.LinkedList;
+import assignment8.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,8 +14,6 @@ public class CommentManager {
 
     private static final Object mutex = new Object();
     private static volatile assignment8.data.CommentManager instance;
-    private final List<Comment> comments = new LinkedList<>();
-    private Integer id = 0;
 
     private CommentManager() {
     }
@@ -29,35 +32,44 @@ public class CommentManager {
 
 
     public int addComment(final Comment comment) {
-        comment.setId(this.id);
-        comments.add(comment);
-        this.id++;
-        return this.id;
+        Session session = HibernateUtil.getSession();
+        Transaction tx = session.beginTransaction();
+        session.persist(comment);
+        tx.commit();
+        session.flush();
+        session.close();
+        return comment.getId();
     }
 
     public void modifyComment(final int oldCommentId, final Comment newComment) {
+        Session session = HibernateUtil.getSession();
+        Message oldComment = (Message) session.get(Message.class, oldCommentId);
+        session.delete(oldComment);
         newComment.setId(oldCommentId);
-        comments.remove(oldCommentId);
-        comments.add(newComment);
+        session.persist(newComment);
+        session.close();
     }
 
     public Comment getComment(final int id) {
-        return comments.get(id);
+        return (Comment) HibernateUtil.getSession().get(Comment.class, id);
     }
 
-    public List<Comment> getAllComments(final int id) {
-        final List<Comment> messageComments = new LinkedList<>();
+    public List getAllComments(final int id) {
+        Session session = HibernateUtil.getSession();
+        session.createCriteria(Comment.class)
+                .add(Restrictions.eq("message.id", MessageManager.getInstance().getMessage(id)));
 
-        for (final Comment comment : messageComments){
-            if (comment.getMessageId() == id)
-                messageComments.add(comment);
+        try {
+            return session.createCriteria(Comment.class).list();
+        } catch (Exception e) {
+            return new ArrayList<Comment>();
+        } finally {
+            session.close();
         }
-
-        return this.comments;
     }
 
     public void deleteComment(final int id) {
-        comments.remove(id);
+        HibernateUtil.getSession().delete(HibernateUtil.getSession().get(Comment.class, id));
     }
 }
 

@@ -30,6 +30,8 @@ public class UserManager {
         Transaction tx = session.beginTransaction();
         session.persist(user);
         tx.commit();
+        session.flush();
+        session.close();
         return user.getId();
     }
 

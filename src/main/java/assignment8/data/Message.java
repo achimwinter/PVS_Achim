@@ -7,6 +7,7 @@ import org.glassfish.jersey.linking.InjectLink;
 import javax.persistence.*;
 import javax.ws.rs.core.Link;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "messages_table")
@@ -17,6 +18,9 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @OneToMany(mappedBy = "comment_message", cascade = {CascadeType.ALL})
+    private List<Comment> comments;
+
     @Column(name = "text")
     private String text;
 
@@ -24,7 +28,8 @@ public class Message {
     private int votes;
 
     @ManyToOne
-    private User author;
+    @JoinColumn(name = "message_author_id", nullable = false)
+    private User message_author;
 
     @Column(name = "createdAt")
     private Date createdAt;
@@ -46,12 +51,12 @@ public class Message {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
+    public User getMessage_author() {
+        return message_author;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setMessage_author(User author) {
+        this.message_author = author;
     }
 
     public Date getCreatedAt() {
