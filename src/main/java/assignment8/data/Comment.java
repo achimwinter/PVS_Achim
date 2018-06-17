@@ -4,25 +4,37 @@ import assignment8.util.ServerLinkConverter;
 import com.owlike.genson.annotation.JsonConverter;
 import org.glassfish.jersey.linking.InjectLink;
 
+import javax.persistence.*;
 import javax.ws.rs.core.Link;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "comments_table")
 public class Comment {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @Column(name = "text")
     private String text;
+
+    @ManyToOne
     private User author;
+
+    @Column(name = "votes")
     private int votes;
+
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
-    private int messageId;
+
+    @ManyToOne
+    private Message message;
 
     @InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.messageId}/comments/${instance.id}", rel = "self", type = "application/json")
+    @Transient
     private Link self;
-
-    public Comment(final String text, final int messageId) {
-        this.messageId = messageId;
-        this.text = text;
-    }
 
     public Comment() {
     }
@@ -32,12 +44,12 @@ public class Comment {
         return self;
     }
 
-    public int getMessageId() {
-        return messageId;
+    public Message getMessageId() {
+        return message;
     }
 
-    public void setMessageId(final int messageId) {
-        this.messageId = messageId;
+    public void setMessageId(final Message message) {
+        this.message = message;
     }
 
     public int getVotes() {
