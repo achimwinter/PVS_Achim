@@ -58,14 +58,10 @@ public class MessageManager {
     }
 
     public List getAllMessages() {
-        final Session session = HibernateUtil.getSession();
-        try {
-            final List test = session.createCriteria(Message.class).list();
-            return test;
+        try (Session session = HibernateUtil.getSession()) {
+            return session.createCriteria(Message.class).list();
         } catch (final Exception e) {
             return new ArrayList<Message>();
-        } finally {
-            session.close();
         }
     }
 
