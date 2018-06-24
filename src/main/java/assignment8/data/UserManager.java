@@ -5,8 +5,8 @@ import org.hibernate.Session;
 
 public class UserManager {
 
-    private static volatile UserManager instance;
     private static final Object mutex = new Object();
+    private static volatile UserManager instance;
 
     private UserManager() {
     }
@@ -24,9 +24,9 @@ public class UserManager {
     }
 
     public Long createUser() {
-        Session session = HibernateUtil.getSession();
+        final Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        User user = new User();
+        final User user = new User();
         session.persist(user);
         session.getTransaction().commit();
         session.close();
@@ -34,7 +34,7 @@ public class UserManager {
     }
 
     public User getUser(final Long id) {
-        Session session = HibernateUtil.getSession();
+        final Session session = HibernateUtil.getSession();
         return session.get(User.class, id);
     }
 

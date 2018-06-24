@@ -13,14 +13,7 @@ public class User {
 
     private Long id;
 
-    private String test;
-
     public User() {
-    }
-
-    public User(Long id, String test) {
-        this.id = id;
-        this.test = test;
     }
 
     @Id
@@ -30,15 +23,7 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
-    }
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
     }
 }

@@ -48,7 +48,7 @@ public class Message {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -56,7 +56,7 @@ public class Message {
         return message_author;
     }
 
-    public void setMessage_author(User author) {
+    public void setMessage_author(final User author) {
         this.message_author = author;
     }
 
@@ -101,7 +101,7 @@ public class Message {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(final List<Comment> comments) {
         this.comments = comments;
     }
 }

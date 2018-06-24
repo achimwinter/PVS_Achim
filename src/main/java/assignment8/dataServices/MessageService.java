@@ -46,7 +46,7 @@ public class MessageService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createMessage(Message message) {
+    public Response createMessage(final Message message) {
         final Response.ResponseBuilder builder = Response.ok();
 
         final Long i = manager.addMessage(message);

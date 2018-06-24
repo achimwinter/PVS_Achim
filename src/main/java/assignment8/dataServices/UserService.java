@@ -1,10 +1,7 @@
 package assignment8.dataServices;
 
 
-import assignment8.data.User;
 import assignment8.data.UserManager;
-import assignment8.util.HibernateUtil;
-import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -43,14 +40,7 @@ public class UserService {
 
     @POST
     public Response createUser() {
-        Session session = HibernateUtil.getSession();
-        User user = new User();
-
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-        session.close();
-        Long id = user.getId();
+        final Long id = UserManager.getInstance().createUser();
 
         final URI locationURI = uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build();
 

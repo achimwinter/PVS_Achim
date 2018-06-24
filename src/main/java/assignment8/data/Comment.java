@@ -43,7 +43,7 @@ public class Comment {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -52,7 +52,7 @@ public class Comment {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -62,7 +62,7 @@ public class Comment {
         return comments_author;
     }
 
-    public void setComments_author(User comments_author) {
+    public void setComments_author(final User comments_author) {
         this.comments_author = comments_author;
     }
 
@@ -71,7 +71,7 @@ public class Comment {
         return votes;
     }
 
-    public void setVotes(int votes) {
+    public void setVotes(final int votes) {
         this.votes = votes;
     }
 
@@ -80,7 +80,7 @@ public class Comment {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(final LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -90,7 +90,7 @@ public class Comment {
         return comment_message;
     }
 
-    public void setComment_message(Message comment_message) {
+    public void setComment_message(final Message comment_message) {
         this.comment_message = comment_message;
     }
 
