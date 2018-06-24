@@ -1,6 +1,8 @@
 package assignment8.util;
 
+import assignment8.data.Comment;
 import assignment8.data.Message;
+import assignment8.data.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,11 +25,13 @@ public class HibernateUtil {
     }
 
 
-    public static void loadSessionFactory() {
+    private static void loadSessionFactory() {
 
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
         configuration.addAnnotatedClass(Message.class);
+        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Comment.class);
         ServiceRegistry srvcReg = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         sessionFactory = configuration.buildSessionFactory(srvcReg);
     }

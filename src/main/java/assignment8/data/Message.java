@@ -16,9 +16,10 @@ public class Message {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @OneToMany(mappedBy = "comment_message", cascade = {CascadeType.ALL})
+    @Transient
     private List<Comment> comments;
 
     @Column(name = "text")
@@ -27,8 +28,8 @@ public class Message {
     @Column(name = "votes")
     private int votes;
 
-    @ManyToOne
-    @JoinColumn(name = "message_author_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "message_author_id")
     private User message_author;
 
     @Column(name = "createdAt")
@@ -43,11 +44,11 @@ public class Message {
         return self;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,4 +97,11 @@ public class Message {
         this.text = text;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

@@ -2,7 +2,6 @@ package assignment8.data;
 
 import assignment8.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class UserManager {
 
@@ -24,20 +23,19 @@ public class UserManager {
         return result;
     }
 
-    public int createUser() {
+    public Long createUser() {
         Session session = HibernateUtil.getSession();
+        session.beginTransaction();
         User user = new User();
-        Transaction tx = session.beginTransaction();
-        session.persist(user);
-        tx.commit();
-        session.flush();
+        session.save(user);
+        session.getTransaction().commit();
         session.close();
         return user.getId();
     }
 
     public User getUser(final Integer id) {
         Session session = HibernateUtil.getSession();
-        return (User) session.get(User.class, id);
+        return session.get(User.class, id);
     }
 
 }

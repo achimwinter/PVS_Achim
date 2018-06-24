@@ -28,34 +28,41 @@ public class MessageManager {
         return result;
     }
 
-    public void modifyComment(final int oldMessageId, final Message newMessage) {
+    public void modifyComment(final Long oldMessageId, final Message newMessage) {
         Session session = HibernateUtil.getSession();
-        Message oldMessage = (Message) session.get(Message.class, oldMessageId);
-        session.delete(oldMessage);
-        newMessage.setId(oldMessageId);
-        session.persist(newMessage);
+        Transaction tx = session.beginTransaction();
+        Message oldMessage = session.get(Message.class, oldMessageId);
+
+        oldMessage.setText(newMessage.getText());
+        oldMessage.setVotes(newMessage.getVotes());
+        oldMessage.setComments(newMessage.getComments());
+
+        session.save(oldMessage);
+        tx.commit();
+        session.flush();
         session.close();
     }
 
 
-    public int addMessage(Message message) {
+    public Long addMessage(Message message) {
         Session session = HibernateUtil.getSession();
         Transaction tx = session.beginTransaction();
-        session.persist(message);
+        session.saveOrUpdate(message);
         tx.commit();
         session.flush();
         session.close();
         return message.getId();
     }
 
-    public Message getMessage(final int id) {
-        return (Message) HibernateUtil.getSession().get(Message.class, id);
+    public Message getMessage(final Long id) {
+        return HibernateUtil.getSession().get(Message.class, id);
     }
 
     public List getAllMessages() {
-        Session session = HibernateUtil.getSession();
+        final Session session = HibernateUtil.getSession();
         try {
-            return session.createCriteria(Message.class).list();
+            List test = session.createCriteria(Message.class).list();
+            return test;
         } catch (Exception e) {
             return new ArrayList<Message>();
         } finally {
@@ -63,7 +70,7 @@ public class MessageManager {
         }
     }
 
-    public void deleteMessage(final int id) {
+    public void deleteMessage(final Long id) {
         HibernateUtil.getSession().delete(HibernateUtil.getSession().get(Message.class, id));
     }
 

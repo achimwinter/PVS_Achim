@@ -12,55 +12,88 @@ import java.time.LocalDateTime;
 @Table(name = "comments_table")
 public class Comment {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    @Column(name = "text")
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "comments_author_id")
     private User comments_author;
 
-    @Column(name = "votes")
     private int votes;
 
-    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "comment_message_id")
     private Message comment_message;
 
     @InjectLink(style = InjectLink.Style.ABSOLUTE, value = "/messages/${instance.messageId}/comments/${instance.id}", rel = "self", type = "application/json")
-    @Transient
     private Link self;
 
     public Comment() {
     }
 
+    @Transient
     @JsonConverter(ServerLinkConverter.class)
     public Link getSelf() {
         return self;
     }
 
-    public Message getMessage() {
-        return comment_message;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
     }
 
-    public void setMessage(final Message message) {
-        this.comment_message = message;
+    public void setId(Long id) {
+        this.id = id;
     }
 
+    @Column(name = "text")
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "comments_author_id")
+    public User getComments_author() {
+        return comments_author;
+    }
+
+    public void setComments_author(User comments_author) {
+        this.comments_author = comments_author;
+    }
+
+    @Column(name = "votes")
     public int getVotes() {
         return votes;
     }
 
-    public void setVotes(final int votes) {
+    public void setVotes(int votes) {
         this.votes = votes;
     }
+
+    @Column(name = "createdAt")
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "comment_message_id")
+    public Message getComment_message() {
+        return comment_message;
+    }
+
+    public void setComment_message(Message comment_message) {
+        this.comment_message = comment_message;
+    }
+
 
     public void incrementVotes() {
         this.votes++;
@@ -68,38 +101,6 @@ public class Comment {
 
     public void decrementVotes() {
         this.votes--;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(final int id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(final String text) {
-        this.text = text;
-    }
-
-    public User getComments_author() {
-        return comments_author;
-    }
-
-    public void setComments_author(final User author) {
-        this.comments_author = author;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(final LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
 }

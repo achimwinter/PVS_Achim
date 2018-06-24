@@ -1,5 +1,6 @@
 package assignment8.data;
 
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,22 +9,40 @@ import java.util.List;
 @Table(name = "users_table")
 public class User {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    @OneToMany(mappedBy = "message_author", cascade = {CascadeType.ALL})
     private List<Message> messages;
 
-    @OneToMany(mappedBy = "comments_author", cascade = {CascadeType.ALL})
     private List<Comment> comments;
 
-    public Integer getId() {
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    public Long getId() {
         return id;
     }
 
-    public void setId(final int id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
+    @OneToMany(mappedBy = "message_author", cascade = {CascadeType.ALL})
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    @OneToMany(mappedBy = "comments_author", cascade = {CascadeType.ALL})
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+
 }

@@ -21,7 +21,7 @@ public class MessageService {
 
     @GET
     @Path("{id : \\d+}")
-    public Response getMessageByID(@PathParam("id") final int id) {
+    public Response getMessageByID(@PathParam("id") final Long id) {
         final Response.ResponseBuilder builder = Response.ok(manager.getMessage(id));
 
         Hyperlinks.addLink(uriInfo, builder, "zickzack/api/messages/" + id, "PUT/modifyText", MediaType.APPLICATION_JSON);
@@ -34,7 +34,8 @@ public class MessageService {
 
     @GET
     public Response getAllMessages() {
-        final List<Message> messagesList = manager.getAllMessages();
+        System.out.println("rest reached");
+        final List messagesList = manager.getAllMessages();
 
         final Response.ResponseBuilder builder = Response.ok(messagesList);
 
@@ -48,7 +49,7 @@ public class MessageService {
     public Response createMessage(Message message) {
         final Response.ResponseBuilder builder = Response.ok();
 
-        final int i = manager.addMessage(message);
+        final Long i = manager.addMessage(message);
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + i, "GET/getMessage", MediaType.APPLICATION_JSON);
 
@@ -58,7 +59,7 @@ public class MessageService {
     @PUT
     @Path("{id: \\d+}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putMessage(@PathParam("id") final int id, final Message newMessage) {
+    public Response putMessage(@PathParam("id") final Long id, final Message newMessage) {
         manager.modifyComment(id, newMessage);
 
         return Response.ok().build();
@@ -68,7 +69,7 @@ public class MessageService {
     @POST
     @Path("{id: \\d+}/votes/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response voteMessage(@PathParam("id") final int id, final Vote vote) {
+    public Response voteMessage(@PathParam("id") final Long id, final Vote vote) {
         final Response.ResponseBuilder builder = Response.ok();
 
         final Message message = manager.getMessage(id);
@@ -85,7 +86,7 @@ public class MessageService {
 
     @DELETE
     @Path("{id : \\d+}")
-    public Response deleteMessage(@PathParam("id") final int id) {
+    public Response deleteMessage(@PathParam("id") final Long id) {
         final Response.ResponseBuilder builder = Response.ok();
 
         manager.deleteMessage(id);
@@ -96,7 +97,7 @@ public class MessageService {
 
     @GET
     @Path("{id : \\d+}/comments")
-    public Response getComments(@PathParam("id") final int id) {
+    public Response getComments(@PathParam("id") final Long id) {
         final Response.ResponseBuilder builder = Response.ok(CommentManager.getInstance().getAllComments(id));
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + id + "/comments", "POST/postComment", MediaType.APPLICATION_JSON);
@@ -111,16 +112,16 @@ public class MessageService {
     public Response createComment(final Comment comment) {
         final Response.ResponseBuilder builder = Response.ok();
 
-        final int id = CommentManager.getInstance().addComment(comment);
+        final Long id = CommentManager.getInstance().addComment(comment);
 
-        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessage() + "/comments/" + id, "GET/getComment", MediaType.APPLICATION_JSON);
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getComment_message() + "/comments/" + id, "GET/getComment", MediaType.APPLICATION_JSON);
 
         return builder.build();
     }
 
     @DELETE
     @Path("{messageId: \\d}/comments/{commentId: \\d}")
-    public Response deleteComment(@PathParam("messageId") final int messageId, @PathParam("commentId") final int commentId) {
+    public Response deleteComment(@PathParam("messageId") final Long messageId, @PathParam("commentId") final Long commentId) {
         final Response.ResponseBuilder builder = Response.ok();
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + messageId + "/comments/" + commentId, "GET/getComment", MediaType.APPLICATION_JSON);
@@ -132,7 +133,7 @@ public class MessageService {
     @PUT
     @Path("{messageId: \\d}/comments/{commentId: \\d}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response putComment(@PathParam("messageId") final int messageId, @PathParam("commentId") final int commentId, final Comment newComment) {
+    public Response putComment(@PathParam("messageId") final Long messageId, @PathParam("commentId") final Long commentId, final Comment newComment) {
         CommentManager.getInstance().modifyComment(commentId, newComment);
         final Response.ResponseBuilder builder = Response.ok();
 
@@ -143,7 +144,7 @@ public class MessageService {
 
     @GET
     @Path("{messageId: \\d}/comments/{commentId: \\d}")
-    public Response getComment(@PathParam("messageId") final int messageId, @PathParam("commentId") final int commentId) {
+    public Response getComment(@PathParam("messageId") final Long messageId, @PathParam("commentId") final Long commentId) {
         final Response.ResponseBuilder builder = Response.ok();
 
         Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + messageId + "/comments/" + commentId, "DELETE/deleteComment", MediaType.APPLICATION_JSON);
@@ -157,7 +158,7 @@ public class MessageService {
     @POST
     @Path("{messageId: \\d}/comments/{commentId: \\d}/votes")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response voteComment(@PathParam("commentId") final int commentId, final Vote vote) {
+    public Response voteComment(@PathParam("commentId") final Long commentId, final Vote vote) {
         final Response.ResponseBuilder builder = Response.ok();
 
         final Comment comment = CommentManager.getInstance().getComment(commentId);
@@ -167,7 +168,7 @@ public class MessageService {
         else
             comment.decrementVotes();
 
-        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getMessage() + "/comments/" + commentId, "GET/getComment", MediaType.APPLICATION_JSON);
+        Hyperlinks.addLink(this.uriInfo, builder, "/zickzack/api/messages/" + comment.getComment_message() + "/comments/" + commentId, "GET/getComment", MediaType.APPLICATION_JSON);
 
         return Response.ok().build();
     }

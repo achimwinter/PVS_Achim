@@ -1,7 +1,5 @@
 package assignment8.main;
 
-import assignment8.data.Comment;
-import assignment8.data.Message;
 import assignment8.data.User;
 import com.owlike.genson.Genson;
 import org.apache.catalina.Context;
@@ -28,21 +26,8 @@ public class ServerMain {
         final WebResourceRoot resources = new StandardRoot(context);
         final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
 
-        User us = new User();
-        us.setId(2);
-
-        Message mess = new Message();
-        mess.setMessage_author(us);
-        mess.setText("hallo user 2");
-
-        Comment comment = new Comment();
-        comment.setMessage(mess);
-        comment.setComments_author(us);
-        comment.setText("first comment");
-
-
-        Genson g = new Genson();
-        System.out.println(g.serialize(comment));
+        Genson genson = new Genson();
+        System.out.println(genson.serialize(new User()));
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);
