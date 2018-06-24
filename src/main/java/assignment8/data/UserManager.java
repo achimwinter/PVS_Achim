@@ -27,13 +27,13 @@ public class UserManager {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         User user = new User();
-        session.save(user);
+        session.persist(user);
         session.getTransaction().commit();
         session.close();
         return user.getId();
     }
 
-    public User getUser(final Integer id) {
+    public User getUser(final Long id) {
         Session session = HibernateUtil.getSession();
         return session.get(User.class, id);
     }

@@ -46,10 +46,9 @@ public class MessageManager {
 
     public Long addMessage(Message message) {
         Session session = HibernateUtil.getSession();
-        Transaction tx = session.beginTransaction();
-        session.saveOrUpdate(message);
-        tx.commit();
-        session.flush();
+        session.beginTransaction();
+        session.save(message);
+        session.getTransaction().commit();
         session.close();
         return message.getId();
     }

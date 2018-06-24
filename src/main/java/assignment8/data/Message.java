@@ -16,7 +16,7 @@ public class Message {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
     @OneToMany(mappedBy = "comment_message", cascade = {CascadeType.ALL})
     @Transient
