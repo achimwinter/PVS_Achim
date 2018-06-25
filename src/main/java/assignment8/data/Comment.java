@@ -3,6 +3,7 @@ package assignment8.data;
 import assignment8.util.ServerLinkConverter;
 import com.owlike.genson.annotation.JsonConverter;
 import org.glassfish.jersey.linking.InjectLink;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.ws.rs.core.Link;
@@ -37,8 +38,8 @@ public class Comment {
     }
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public Long getId() {
         return id;
     }

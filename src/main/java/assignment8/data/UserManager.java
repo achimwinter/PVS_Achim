@@ -23,7 +23,7 @@ public class UserManager {
         return result;
     }
 
-    public Long createUser() {
+    public int createUser() {
         final Session session = HibernateUtil.getSession();
         session.beginTransaction();
         final User user = new User();
@@ -35,7 +35,7 @@ public class UserManager {
 
     public User getUser(final Long id) {
         final Session session = HibernateUtil.getSession();
-        return session.get(User.class, id);
+        return (User) session.get(User.class, id);
     }
 
 }

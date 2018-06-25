@@ -1,5 +1,6 @@
 package assignment8.main;
 
+import assignment8.data.UserManager;
 import org.apache.catalina.Context;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.startup.Tomcat;
@@ -23,6 +24,8 @@ public class ServerMain {
         final String pathToClasses = new File(WEB_APP_CLASSES).getAbsolutePath();
         final WebResourceRoot resources = new StandardRoot(context);
         final DirResourceSet dirResourceSet = new DirResourceSet(resources, WEB_APP_MOUNT, pathToClasses, "/");
+
+        UserManager.getInstance().createUser();
 
         resources.addPreResources(dirResourceSet);
         context.setResources(resources);

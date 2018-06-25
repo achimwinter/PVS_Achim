@@ -40,7 +40,7 @@ public class UserService {
 
     @POST
     public Response createUser() {
-        final Long id = UserManager.getInstance().createUser();
+        final int id = UserManager.getInstance().createUser();
 
         final URI locationURI = uriInfo.getAbsolutePathBuilder().path(Long.toString(id)).build();
 

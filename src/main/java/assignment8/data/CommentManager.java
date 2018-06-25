@@ -43,7 +43,7 @@ public class CommentManager {
 
     public void modifyComment(final Long oldCommentId, final Comment newComment) {
         final Session session = HibernateUtil.getSession();
-        final Message oldComment = session.get(Message.class, oldCommentId);
+        final Message oldComment = (Message) session.get(Message.class, oldCommentId);
         session.delete(oldComment);
         newComment.setId(oldCommentId);
         session.persist(newComment);
@@ -51,18 +51,21 @@ public class CommentManager {
     }
 
     public Comment getComment(final Long id) {
-        return HibernateUtil.getSession().get(Comment.class, id);
+
+        return (Comment) HibernateUtil.getSession().get(Comment.class, id);
     }
 
     public List getAllComments(final Long id) {
-
-        try (final Session session = HibernateUtil.getSession()) {
+        final Session session = HibernateUtil.getSession();
+        try {
 
             session.createCriteria(Comment.class)
                     .add(Restrictions.eq("message.id", MessageManager.getInstance().getMessage(id)));
             return session.createCriteria(Comment.class).list();
         } catch (final Exception e) {
             return new ArrayList<Comment>();
+        } finally {
+            session.close();
         }
     }
 

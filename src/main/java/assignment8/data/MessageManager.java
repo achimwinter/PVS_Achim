@@ -31,7 +31,7 @@ public class MessageManager {
     public void modifyComment(final Long oldMessageId, final Message newMessage) {
         final Session session = HibernateUtil.getSession();
         final Transaction tx = session.beginTransaction();
-        final Message oldMessage = session.get(Message.class, oldMessageId);
+        Message oldMessage = (Message) session.get(Message.class, oldMessageId);
 
         oldMessage.setText(newMessage.getText());
         oldMessage.setVotes(newMessage.getVotes());
@@ -39,7 +39,6 @@ public class MessageManager {
 
         session.save(oldMessage);
         tx.commit();
-        session.flush();
         session.close();
     }
 
@@ -54,14 +53,17 @@ public class MessageManager {
     }
 
     public Message getMessage(final Long id) {
-        return HibernateUtil.getSession().get(Message.class, id);
+        return (Message) HibernateUtil.getSession().get(Message.class, id);
     }
 
     public List getAllMessages() {
-        try (Session session = HibernateUtil.getSession()) {
+        Session session = HibernateUtil.getSession();
+        try {
             return session.createCriteria(Message.class).list();
         } catch (final Exception e) {
             return new ArrayList<Message>();
+        } finally {
+            session.close();
         }
     }
 

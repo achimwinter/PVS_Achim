@@ -3,6 +3,7 @@ package assignment8.data;
 import assignment8.util.ServerLinkConverter;
 import com.owlike.genson.annotation.JsonConverter;
 import org.glassfish.jersey.linking.InjectLink;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.ws.rs.core.Link;
@@ -14,9 +15,9 @@ import java.util.List;
 public class Message {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private Long id;
 
     @OneToMany(mappedBy = "comment_message", cascade = {CascadeType.ALL})
     @Transient
@@ -28,7 +29,7 @@ public class Message {
     @Column(name = "votes")
     private int votes;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "message_author_id")
     private User message_author;
 

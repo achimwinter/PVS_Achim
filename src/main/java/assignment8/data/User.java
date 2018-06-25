@@ -11,19 +11,20 @@ import javax.persistence.Table;
 @Table(name = "users_table")
 public class User {
 
-    private Long id;
+    public int id;
 
     public User() {
     }
 
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final int id) {
         this.id = id;
     }
 }
